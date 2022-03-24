@@ -33,8 +33,7 @@ public class Geolocalizacao {
 	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
 
-	public Geolocalizacao() {
-	}
+	public Geolocalizacao() {}
 	
 
 	public Geolocalizacao(Long id, String latitude, String longitude, LocalDateTime data, Entregador entregador,

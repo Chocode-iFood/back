@@ -85,5 +85,4 @@ public class GeolocalizacaoDTO {
 		this.pedido = pedido;
 	}
 	
-	
 }

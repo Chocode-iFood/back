@@ -24,7 +24,8 @@ public class Entregador {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String email; //unic?
+	@Column(unique = true)
+	private String email; 
 	private String senha;
 	
 	@Column(name = "url_image")
