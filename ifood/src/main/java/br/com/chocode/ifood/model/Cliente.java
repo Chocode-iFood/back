@@ -22,9 +22,16 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "nome", nullable = false)
 	private String nome;
+
+	@Column(name = "endereco", nullable = false)
 	private String endereco;
+
+	@Column(name = "latitude", nullable = false)
 	private String latitude;
+
+	@Column(name = "longitude", nullable = false)
 	private String longitude;
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -97,6 +104,4 @@ public class Cliente {
 	public Set<Pedido> getPedidos() {
 		return pedidos;
 	}
-	
-
 }

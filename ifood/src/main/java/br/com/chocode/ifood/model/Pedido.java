@@ -24,10 +24,13 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "nome_restaurante")
+	@Column(name = "nome_restaurante", nullable = false)
 	private String nomeRestaurante;
 
+	@Column(name = "produto", nullable = false)
 	private String produto;
+
+	@Column(name = "status", nullable = false)
 	private String status;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
@@ -41,6 +44,8 @@ public class Pedido {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+
+	public Pedido () {}
 
 	public Pedido(Long id, String nomeRestaurante, String produto, String status, Set<Geolocalizacao> geo,
 			Entregador entregador, Cliente cliente) {
@@ -64,7 +69,6 @@ public class Pedido {
 		}
 		this.entregadorP = new Entregador(pedido.getEntregador());
 		this.cliente = new Cliente(pedido.getCliente());
-		
 	}
 
 	public Long getId() {
@@ -102,7 +106,6 @@ public class Pedido {
 	public Set<Geolocalizacao> getGeo() {
 		return geo;
 	}
-
 
 	public Entregador getEntregador() {
 		return entregadorP;

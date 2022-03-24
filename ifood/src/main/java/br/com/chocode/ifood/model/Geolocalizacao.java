@@ -21,8 +21,14 @@ public class Geolocalizacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "latitude", nullable = false)
 	private String latitude;
+
+	@Column(name = "longitude", nullable = false)
 	private String longitude;
+
+	@Column(name = "data", nullable = false)
 	private LocalDateTime data;
 	
 	@ManyToOne
@@ -34,7 +40,6 @@ public class Geolocalizacao {
 	private Pedido pedido;
 
 	public Geolocalizacao() {}
-	
 
 	public Geolocalizacao(Long id, String latitude, String longitude, LocalDateTime data, Entregador entregador,
 			Pedido pedido) {
@@ -99,29 +104,20 @@ public class Geolocalizacao {
 		this.entregadorG = entregador;
 	}
 
-
 	public Entregador getEntregadorG() {
 		return entregadorG;
 	}
-
 
 	public void setEntregadorG(Entregador entregadorG) {
 		this.entregadorG = entregadorG;
 	}
 
-
 	public Pedido getPedido() {
 		return pedido;
 	}
 
-
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-
-
-
-
-
 
 }
