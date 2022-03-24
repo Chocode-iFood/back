@@ -1,0 +1,7 @@
+#spring.profiles.active=test
+#spring.jpa.open-in-view=true
+
+ spring.datasource.username = lzfvdfwyxratyb
+ spring.datasource.password = b63f86eea5bd4aa6de8d206b9b7e9a699ee366636b4138e15240e12c6a43c157
+ spring.datasource.url = jdbc:postgresql://ec2-3-225-213-67.compute-1.amazonaws.com:5432/db4eoh2rvbcmub?useTimezone=true&serverTimezone=UTC
+ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect

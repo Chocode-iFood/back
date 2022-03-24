@@ -33,7 +33,7 @@ public class Pedido {
 	@Column(name = "status", nullable = false)
 	private String status;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST)
 	@JsonIgnore
 	private Set<Geolocalizacao> geo = new HashSet<>();
 
