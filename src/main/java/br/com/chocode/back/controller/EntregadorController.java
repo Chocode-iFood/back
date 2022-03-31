@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/entregador")
+@RequestMapping("/entregadores")
 public class EntregadorController {
 	
 	@Autowired
@@ -22,22 +22,27 @@ public class EntregadorController {
 		return ResponseEntity.status(201).body(service.save(entregador));
 	}
 
-	@GetMapping("/listar")
+	@GetMapping
 	public ResponseEntity<List<Entregador>> findAll() {
 		return ResponseEntity.status(200).body(service.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Entregador> findById(@PathVariable Long id) {
-		return ResponseEntity.status(200).body(service.findById(id));
+		Entregador entregador = service.findById(id);
+		if (entregador == null) {
+			return ResponseEntity.status(404).body(null);
+		}
+		return ResponseEntity.status(200).body(entregador);
 	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<Token> realizarLogin(@RequestBody Entregador dadosLogin) {
 		Token token = service.gerarTokenDeUsuarioLogado(dadosLogin);
-		if (token != null) {
-			return ResponseEntity.ok(token);
+		if (token == null) {
+			return ResponseEntity.status(401).body(null);
 		}
-		return ResponseEntity.status(401).build();
+		return ResponseEntity.status(200).body(token);
+
 	}
 }

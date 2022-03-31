@@ -7,7 +7,6 @@ import java.util.List;
 
 @Repository
 public interface PedidoDAO extends JpaRepository<Pedido, Long> {
-    List<Pedido> findByEntregadorNull();
     List<Pedido> findByStatus(String status);
 
 }

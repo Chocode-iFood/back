@@ -9,9 +9,12 @@ import java.util.List;
 
 @Component
 public class ClienteServiceImpl implements IClienteService{
+    private ClienteDAO dao;
 
     @Autowired
-    private ClienteDAO dao;
+    public ClienteServiceImpl(ClienteDAO dao) {
+        this.dao = dao;
+    }
 
     @Override
     public Cliente save(Cliente cliente) {

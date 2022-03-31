@@ -7,11 +7,11 @@ import br.com.chocode.back.security.Token;
 
 public interface IEntregadorService {
 
-	public Token gerarTokenDeUsuarioLogado(Entregador dadosLogin);
-
 	public Entregador save(Entregador entregador);
 
 	public List<Entregador> findAll();
 
 	public Entregador findById(Long id);
+
+	public Token gerarTokenDeUsuarioLogado(Entregador dadosLogin);
 }

@@ -5,12 +5,11 @@ import br.com.chocode.back.services.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
@@ -21,13 +20,17 @@ public class ClienteController {
         return ResponseEntity.status(201).body(service.save(cliente));
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<Cliente>> findAll() {
         return ResponseEntity.status(200).body(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> findById(@PathVariable Long id) {
+        Cliente cliente = service.findById(id);
+        if (cliente == null) {
+            return ResponseEntity.status(404).body(null);
+        }
         return ResponseEntity.status(200).body(service.findById(id));
     }
 }

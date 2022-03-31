@@ -1,7 +1,6 @@
 package br.com.chocode.back.services;
 
 import br.com.chocode.back.DTO.PedidoDTO;
-import br.com.chocode.back.DTO.StatusDTO;
 import br.com.chocode.back.dao.PedidoDAO;
 import br.com.chocode.back.model.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +12,31 @@ import java.util.List;
 
 @Component
 public class PedidoServiceImpl implements IPedidoService {
-
-	@Autowired
 	private PedidoDAO dao;
+	private IEntregadorService entregadorService;
+	private IClienteService clienteService;
 
 	@Autowired
-	private EntregadorServiceImpl entregadorService;
+	public PedidoServiceImpl(PedidoDAO dao, IEntregadorService entregadorService, IClienteService clienteService) {
+		this.dao = dao;
+		this.entregadorService = entregadorService;
+		this.clienteService = clienteService;
+	}
 
-	@Autowired
-	private ClienteServiceImpl clienteService;
 
 	public Pedido save(PedidoDTO pedidoDTO) {
-
 		Pedido pedido = new Pedido(pedidoDTO, clienteService.findById(pedidoDTO.getIdCliente()));
 		return dao.saveAndFlush(pedido);
+	}
+
+	public List<Pedido> findAll() {
+		List<Pedido> listaPedidos = dao.findAll(Sort.by(Sort.Direction.ASC, "nomeRestaurante"));
+		return listaPedidos;
+	}
+
+	public Pedido findById(Long id) {
+		Pedido pedido = dao.findById(id).get();
+		return pedido;
 	}
 
 	public Pedido saveEntregador(Long idPedido, Long idEntregador) {
@@ -53,27 +63,6 @@ public class PedidoServiceImpl implements IPedidoService {
 		return dao.saveAndFlush(pedido);
 	}
 
-	public Pedido saveStatus(Long idPedido, StatusDTO status) {
-		Pedido pedido = findById(idPedido);
-		pedido.setStatus(status.getStatus());
-		return dao.saveAndFlush(pedido);
-	}
-
-	public List<Pedido> findAll() {
-		List<Pedido> listaPedidos = dao.findAll(Sort.by(Sort.Direction.ASC, "nomeRestaurante"));
-		return listaPedidos;
-	}
-
-	public List<PedidoDTO> findAllAguardando() {
-		List<Pedido> listaPedidos = dao.findByEntregadorNull();
-		List<PedidoDTO> listaPedidosDTO = new ArrayList<>();
-		for (Pedido pedido : listaPedidos){
-			if ( pedido.getCliente() != null)
-				listaPedidosDTO.add(new PedidoDTO(pedido));
-		}
-		return listaPedidosDTO;
-	}
-
 	public List<PedidoDTO> findAllStatus(String status) {
 		List<Pedido> listaPedidos = dao.findByStatus(status);
 		List<PedidoDTO> listaPedidosDTO = new ArrayList<>();
@@ -82,12 +71,6 @@ public class PedidoServiceImpl implements IPedidoService {
 				listaPedidosDTO.add(new PedidoDTO(pedido));
 		}
 		return listaPedidosDTO;
-	}
-
-
-	public Pedido findById(Long id) {
-		Pedido pedido = dao.findById(id).get();
-		return pedido;
 	}
 
 }

@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EntregadorDAO extends JpaRepository<Entregador, Long> {
-
-	public Entregador findByEmail(String email);
+	Entregador findByEmail(String email);
 }

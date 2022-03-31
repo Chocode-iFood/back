@@ -23,10 +23,10 @@ public class TokenUtil {
 	private static final int    HORAS    = 60*MINUTOS;
 	private static final int    DIAS     = 24*HORAS;
 	
-	private static final String HEADER = "Authorization";  //cabecalho http
-	private static final String PREFIX = "Bearer ";        //prefixo do token
-	private static final long   EXPIRATION = DIAS;         //tempo de validade
-	private static final String SECRET_KEY = "3c0MMerc3Do1f00dP@r@T3st3sD3JWT*";  //palavra chave do token
+	private static final String HEADER = "Authorization";
+	private static final String PREFIX = "Bearer ";
+	private static final long   EXPIRATION = DIAS;
+	private static final String SECRET_KEY = "3c0MMerc3Do1f00dP@r@T3st3sD3JWT*";
 	private static final String EMISSOR    = "Chocode";
 	
 	public static String createToken(Entregador entregador) {

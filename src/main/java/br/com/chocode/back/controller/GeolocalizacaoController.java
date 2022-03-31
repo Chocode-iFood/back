@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/geolocalizacao")
+@RequestMapping(value = "/geolocalizacoes")
 public class GeolocalizacaoController {
 	
 	@Autowired
@@ -26,25 +26,27 @@ public class GeolocalizacaoController {
 		return ResponseEntity.status(201).body(geolocalizacao);
 	}
 
-	@GetMapping("/listar")
+	@GetMapping
 	public ResponseEntity<List<GeolocalizacaoDTO>> findAll() {
 		return ResponseEntity.status(200).body(service.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Geolocalizacao> findById(@PathVariable Long id) {
-		return ResponseEntity.status(200).body(service.findById(id));
+		Geolocalizacao geolocalizacao = service.findById(id);
+		if (geolocalizacao == null) {
+			return ResponseEntity.status(404).body(null);
+		}
+		return ResponseEntity.status(200).body(geolocalizacao);
 	}
 
 	@GetMapping("/pedido/{id}")
 	public ResponseEntity<List<GeolocalizacaoDTO>> findAllGeo(@PathVariable Long id) {
-		return ResponseEntity.status(200).body(service.findByPedidoId(id));
-	}
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity deleteGeo(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.status(200).body("ok");
+		List<GeolocalizacaoDTO> geoPedido = service.findByPedidoId(id);
+		if (geoPedido == null) {
+			return ResponseEntity.status(404).body(null);
+		}
+		return ResponseEntity.status(200).body(geoPedido);
 	}
 
 }
