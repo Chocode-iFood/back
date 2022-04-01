@@ -1,12 +1,12 @@
 package br.com.chocode.back.controller;
 
+import br.com.chocode.back.DTO.PedidoClienteDTO;
 import br.com.chocode.back.DTO.PedidoDTO;
 import br.com.chocode.back.model.Pedido;
 import br.com.chocode.back.services.IPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,13 +23,13 @@ public class PedidoController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Pedido>> findAll() {
+	public ResponseEntity<List<PedidoDTO>> findAll() {
 		return ResponseEntity.status(200).body(service.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Pedido> findById(@PathVariable Long id) {
-		return ResponseEntity.status(200).body(service.findById(id));
+	public ResponseEntity<PedidoClienteDTO> findById(@PathVariable Long id) {
+		return ResponseEntity.status(200).body(service.findByIdCliente(id));
 	}
 
 	@PutMapping("/{idPedido}/entregador/{idEntregador}")
@@ -61,4 +61,8 @@ public class PedidoController {
 		return ResponseEntity.status(200).body(service.findAllStatus(status));
 	}
 
+	@GetMapping("/entregador/{idEntregador}/status/{status}")
+	public ResponseEntity<List<PedidoDTO>> findAllEntregadorStatus(@PathVariable Long idEntregador, @PathVariable String status) {
+		return ResponseEntity.status(200).body(service.findAllEntregadorStatus(idEntregador, status));
+	}
 }
