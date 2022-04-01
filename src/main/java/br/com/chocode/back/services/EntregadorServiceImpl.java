@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.chocode.back.DTO.EntregadorDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import br.com.chocode.back.dao.EntregadorDAO;
@@ -14,6 +16,7 @@ import br.com.chocode.back.security.TokenUtil;
 
 @Component
 public class EntregadorServiceImpl implements IEntregadorService {
+	private static final Logger LOG = LoggerFactory.getLogger(EntregadorServiceImpl.class);
 	private EntregadorDAO dao;
 
 	@Autowired
@@ -25,11 +28,14 @@ public class EntregadorServiceImpl implements IEntregadorService {
 	public EntregadorDTO save(Entregador entregador) {
 		String senhaLogin;
 		try {
+			LOG.info("Fazendo a criptografia da senha do entregador.");
 			senhaLogin = ChocodeCrypto.encrypt(entregador.getSenha());
 			entregador.setSenha(senhaLogin);
 		} catch (Exception e) {
+			LOG.info("Erro na criptografia da senha do entregador.");
 			e.printStackTrace();
 		}
+		LOG.info("Salvando entregador no banco de dados.");
 		EntregadorDTO entregadorDTO = new EntregadorDTO(dao.saveAndFlush(entregador));
 		return entregadorDTO;
 	}
@@ -38,8 +44,10 @@ public class EntregadorServiceImpl implements IEntregadorService {
 	public List<EntregadorDTO> findAll() {
 		List<Entregador> listaEntregadores = dao.findAll();
 		List<EntregadorDTO> listaEntregadoresDTO = new ArrayList<>();
-		for (Entregador entregador : listaEntregadores)
+		for (Entregador entregador : listaEntregadores) {
 			listaEntregadoresDTO.add(new EntregadorDTO(entregador));
+		}
+		LOG.info("Listando todos os entregadores.");
 		return listaEntregadoresDTO;
 	}
 	@Override
@@ -49,6 +57,7 @@ public class EntregadorServiceImpl implements IEntregadorService {
 	}
 	@Override
 	public Entregador findByIdModel(Long id) {
+		LOG.info("Resultado da busca do entregador com o id " + id + ".");
 		return dao.findById(id).get();
 	}
 
@@ -64,12 +73,14 @@ public class EntregadorServiceImpl implements IEntregadorService {
 				System.out.println("Senha user  = " + user.getSenha());
 
 				if (senhaLogin.equals(user.getSenha())) {
+					LOG.info("Gerando token.");
 					return new Token(TokenUtil.createToken(user), user.getId(), user.getNome(), user.getUrlImage());
 				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		LOG.info("Erro ao gerar token.");
 		return null;
 	}
 }
