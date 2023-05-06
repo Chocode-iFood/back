@@ -39,6 +39,7 @@ public class EntregadorController {
 	@PostMapping("/login")
 	public ResponseEntity<Token> realizarLogin(@RequestBody Entregador dadosLogin) {
 		Token token = service.gerarTokenDeUsuarioLogado(dadosLogin);
+
 		if (token == null) {
 			return ResponseEntity.status(401).body(null);
 		}

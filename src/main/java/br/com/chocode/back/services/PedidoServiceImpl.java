@@ -13,9 +13,9 @@ import java.util.List;
 
 @Component
 public class PedidoServiceImpl implements IPedidoService {
-	private PedidoDAO dao;
-	private IEntregadorService entregadorService;
-	private IClienteService clienteService;
+	private final PedidoDAO dao;
+	private final IEntregadorService entregadorService;
+	private final IClienteService clienteService;
 
 	@Autowired
 	public PedidoServiceImpl(PedidoDAO dao, IEntregadorService entregadorService, IClienteService clienteService) {
